@@ -26,7 +26,7 @@ public class CreateAcMenu {
              
         cName = ScannerUtil.promptForNextLine("Please key in Customer Name for the Account: ");
 
-        email = ScannerUtil.promptForNextLineWithValidation("Please key in email address: ", "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$","Please enter a valid email address");
+        email = ScannerUtil.promptForNextLineWithValidation("Please key in email address: ", "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+[a-zA-Z0-9-]$","Please enter a valid email address");
         
         System.out.println("0: Savings Account");
         System.out.println("1: Current Account");

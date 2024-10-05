@@ -2,6 +2,7 @@ package project.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import project.model.Account;
 import project.util.BGColors;
@@ -17,7 +18,7 @@ import project.util.BGColors;
 
 public class AccountSvc {
 
-    private static ArrayList<Account> accounts = new ArrayList<Account>();
+    private static List<Account> accounts = new ArrayList<Account>();
     private static int noOfSavingAc = 0;
     private static int noOfCurrentAc = 0;
 
