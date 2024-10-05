@@ -31,12 +31,13 @@ public class AccountSvc {
         return (2 + String.format("%05d", noOfCurrentAc));
     }
 
-    public static Account createAccount(byte acType, double amount, String cName, String nric) {
+    public static Account createAccount(byte acType, double amount, String cName, String nric, String email) {
         Account account = new Account();
         account.setAcType(acType);
         account.deposit(amount);
         account.setCustomerName(cName);
         account.setCustomerNric(nric);
+        account.setCustomerEmail(email);
         account.setCreationDateTime(LocalDateTime.now());
         accounts.add(account);
         return account;

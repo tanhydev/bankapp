@@ -73,6 +73,10 @@ public class Account {
         customer.setNric(nric);
     }
 
+    public void setCustomerEmail(String email){
+        customer.setEmail(email);
+    }
+
     public LocalDateTime getCreationDateTime() {
         return creationDateTime;
     }
@@ -87,6 +91,7 @@ public class Account {
         System.out.println("Account Type: "+AccountType.getAccountTypeName(acType));       
         System.out.println("Customer Name: "+customer.getFname());
         System.out.println("Customer NRIC:" + customer.getNric());
+        System.out.println("Customer Email: "+customer.getEmail());
         System.out.println("Balance: "+ String.format("%.2f",balance));
         System.out.println("Creation Date: "+creationDateTime);
     }
