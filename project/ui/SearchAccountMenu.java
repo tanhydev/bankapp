@@ -9,9 +9,11 @@ import project.util.ScannerUtil;
 /* 
  * This provide the menu for to search by account number
  * If account is found, it provides a transaction menu which provides the following options:
+ * Check Account Balance
  * Deposit Money
  * Withdraw Money
- * Close Account
+ * Display Transaction History
+ * Delete Account
  * Back to Main Menu
  */
 
