@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import project.model.Account;
+import project.model.TransHistory;
 import project.util.BGColors;
 
 /* 
@@ -22,12 +23,12 @@ public class AccountSvc {
     private static int noOfSavingAc = 0;
     private static int noOfCurrentAc = 0;
 
-    public static String getSavingAcNo() {
+    private static String getSavingAcNo() {
         noOfSavingAc += 1;
         return (1 + String.format("%05d", noOfSavingAc));
     }
 
-    public static String getCurrentAcNo() {
+    private static String getCurrentAcNo() {
         noOfCurrentAc += 1;
         return (2 + String.format("%05d", noOfCurrentAc));
     }
@@ -35,11 +36,20 @@ public class AccountSvc {
     public static Account createAccount(byte acType, double amount, String cName, String nric, String email) {
         Account account = new Account();
         account.setAcType(acType);
-        account.deposit(amount);
+        if(acType == 0){
+            account.setAcNumber(getSavingAcNo());
+        }else if(acType == 1){
+            account.setAcNumber(getCurrentAcNo());
+        }
         account.setCustomerName(cName);
         account.setCustomerNric(nric);
         account.setCustomerEmail(email);
         account.setCreationDateTime(LocalDateTime.now());
+        
+        TransHistory th = new TransHistory((byte)0, 0, account.getBalance(), LocalDateTime.now());
+        account.addTxHistory(th);
+
+        account.deposit(amount);
         accounts.add(account);
         return account;
     }

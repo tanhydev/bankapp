@@ -39,9 +39,9 @@ public class SearchAccountMenu {
             boolean exitAcMenu = false;
             do {
                 DispalyTxMenu();
-                byte choice = ScannerUtil.promptForByte("Please enter choice: ", 1, 4);
+                byte choice = ScannerUtil.promptForByte("Please enter choice: ", 1, 6);
                 processTxOption(choice);
-                if (choice == 1 || choice == 4) {
+                if (choice == 5 || choice == 6) {
                     exitAcMenu = true;
                 }
             } while (!exitAcMenu);
@@ -52,16 +52,40 @@ public class SearchAccountMenu {
         System.out.println("---------------------------------");
         System.out.println("Transaction Menu");
         System.out.println("---------------------------------");
-        System.out.println("1. Close Account");
+        System.out.println("1. Check Balance");
         System.out.println("2. Deposit Money");
         System.out.println("3. Withdraw Money");
-        System.out.println("4. Back to Main Menu");
+        System.out.println("4. Show Transaction History");
+        System.out.println("5. Delete Account");
+        System.out.println("6. Back to Main Menu");
     }
 
     private static void processTxOption(byte c) {
         System.out.println("Option " + c + " has been selected");
         switch (c) {
             case 1:
+                System.out.println("Current Balance: " + selectedAccount.getBalanceStr());
+                break;
+            case 2:
+                // Deposit Money
+                System.out.println("Current Balance: " + selectedAccount.getBalanceStr());
+                double amount = ScannerUtil.promptForDouble("Please input amount to be deposited: ");
+                selectedAccount.deposit(amount);
+                System.out.println("Balance After Deposit: " + selectedAccount.getBalanceStr());
+                break;
+            case 3:
+                // Withdraw Money
+                System.out.println("Current Balance: " + selectedAccount.getBalanceStr());
+                double wAmount = ScannerUtil.promptForDouble("Please input amount to be withdrawed: ");
+                boolean success = selectedAccount.withdraw(wAmount);
+                if (success) {
+                    System.out.println("Balance After Withdrawal: " + selectedAccount.getBalanceStr());
+                }
+                break;
+            case 4:
+                selectedAccount.displayTxHistory();
+                break;
+            case 5:
                 // Delete Account
                 System.out.println("Deleting Account " + selectedAccount.getAcNumber());
                 if (AccountSvc.removeAccount(selectedAccount)) {
@@ -76,23 +100,7 @@ public class SearchAccountMenu {
                 System.out.println("Returning to Main Menu");
                 ScannerUtil.checkForHiddenInput();
                 break;
-            case 2:
-                // Deposit Money
-                System.out.println("Current Balance: " + selectedAccount.getBalance());
-                double amount = ScannerUtil.promptForDouble("Please input amount to be deposited: ");
-                selectedAccount.deposit(amount);
-                System.out.println("Balance After Deposit: " + selectedAccount.getBalance());
-                break;
-            case 3:
-                // Withdraw Money
-                System.out.println("Current Balance: " + selectedAccount.getBalance());
-                double wAmount = ScannerUtil.promptForDouble("Please input amount to be withdrawed: ");
-                boolean success = selectedAccount.withdraw(wAmount);
-                if (success) {
-                    System.out.println("Balance After Withdrawal: " + selectedAccount.getBalance());
-                }
-                break;
-            case 4:
+            case 6:
                 System.out.println("Returning to Main Menu");
                 break;
             default:
