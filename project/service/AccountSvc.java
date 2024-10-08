@@ -91,4 +91,11 @@ public class AccountSvc {
         return accounts.remove(ac);
     }
 
+    public static void insertDummyRecords(){
+        Account dummy1 = createAccount((byte) 0,1000, "Wong CK", "A123B", "Wong CK");
+        dummy1.deposit(200);
+        dummy1.withdraw(300);
+        System.out.println("Dummy Accounts Created");
+    }
+
 }

@@ -71,14 +71,14 @@ public class SearchAccountMenu {
             case 2:
                 // Deposit Money
                 System.out.println("Current Balance: " + selectedAccount.getBalanceStr());
-                double amount = ScannerUtil.promptForDouble("Please input amount to be deposited: ");
+                double amount = ScannerUtil.promptForPositiveDouble("Please input amount to be deposited: ");
                 selectedAccount.deposit(amount);
                 System.out.println("Balance After Deposit: " + selectedAccount.getBalanceStr());
                 break;
             case 3:
                 // Withdraw Money
                 System.out.println("Current Balance: " + selectedAccount.getBalanceStr());
-                double wAmount = ScannerUtil.promptForDouble("Please input amount to be withdrawed: ");
+                double wAmount = ScannerUtil.promptForPositiveDouble("Please input amount to be withdrawed: ");
                 boolean success = selectedAccount.withdraw(wAmount);
                 if (success) {
                     System.out.println("Balance After Withdrawal: " + selectedAccount.getBalanceStr());

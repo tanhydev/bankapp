@@ -88,6 +88,41 @@ public class ScannerUtil {
 
     }
 
+    /*
+     * This method is used to prompt for double value with the msg parameter
+     * provided without any validation
+     */
+    public static double promptForPositiveDouble(String msg) {
+        double input = 0;
+        boolean isOk = false;
+
+        initialize();
+
+        do {
+            System.out.print(msg);
+            if (cScanner.hasNextDouble()) {
+                try {
+                    input = cScanner.nextDouble();
+                    if(input>0){
+                        isOk = true;
+                    }else{
+                        System.out.println("Value must be greater than 0");
+                    }
+                    
+                } catch (InputMismatchException ime) {
+                    System.out.println(ime.getMessage());
+                }
+            } else {
+                cScanner.next(); // consume the invalid input
+                System.out.println("Please input a double value");
+            }
+
+        } while (!isOk);
+
+        return input;
+
+    }
+
 
     /*
      * This method is used to prompt for double value with the msg parameter
