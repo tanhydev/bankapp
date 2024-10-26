@@ -42,6 +42,7 @@ public class Account {
 
     public void closeAccount(){
         this.status = 0;
+        txHistory.add(new TransHistory((byte) 3, 0, balance, LocalDateTime.now()));
     }
 
 
@@ -133,6 +134,7 @@ public class Account {
             count++;
         }
         System.out.println(BGColors.ANSI_RESET);
+        System.out.println("");
     }
 
     public void displayAccountDetails() {

@@ -20,6 +20,7 @@ import project.util.BGColors;
 public class AccountSvc {
 
     private static List<Account> accounts = new ArrayList<Account>();
+    private static List<Account> closedAccounts = new ArrayList<Account>();
     private static int noOfSavingAc = 0;
     private static int noOfCurrentAc = 0;
 
@@ -74,6 +75,29 @@ public class AccountSvc {
         }
     }
 
+    public static void displayClosedAccounts(){
+        if(closedAccounts.size()>0){
+            System.out.print("Displaying " + closedAccounts.size() + " account");
+            if (closedAccounts.size() > 1) {
+                System.out.println("s: ");
+            } else {
+                System.out.println(": ");
+            }
+            System.out.println("------------------");
+            for (Account account : closedAccounts) {
+                System.out.println(BGColors.ANSI_YELLOW);
+                account.displayAccountDetails();
+                System.out.println("");
+                account.displayTxHistory();
+                System.out.println(BGColors.ANSI_RESET);
+                System.out.println("------------------");
+            }
+
+        }else{
+            System.out.println("There are no closed accounts to be displayed!");
+        }
+    }
+
     public static Account getAccount(String acNum){
         Account foundAc = null;
 
@@ -88,6 +112,9 @@ public class AccountSvc {
     }
 
     public static boolean removeAccount(Account ac){
+        ac.withdraw(ac.getBalance());
+        ac.closeAccount();
+        closedAccounts.add(ac);
         return accounts.remove(ac);
     }
 

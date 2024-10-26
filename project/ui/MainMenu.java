@@ -21,7 +21,7 @@ public class MainMenu {
     public static void start() {
         byte choice = 0;
         displayOptions();
-        choice = ScannerUtil.promptForByte("Your Option: ",1, 5);
+        choice = ScannerUtil.promptForByte("Your Option: ", 1, 6);
         processOptions(choice);
     }
 
@@ -34,19 +34,20 @@ public class MainMenu {
             e.printStackTrace();
         }
         System.out.println("---------------------");
-        System.out.println(FontColors.ANSI_BLUE+"Main Menu Options"+FontColors.ANSI_RESET);
+        System.out.println(FontColors.ANSI_BLUE + "Main Menu Options" + FontColors.ANSI_RESET);
         System.out.println("---------------------");
         System.out.println("Choose from the options");
-        System.out.println("---------------------"+BGColors.ANSI_GREEN);
+        System.out.println("---------------------" + BGColors.ANSI_GREEN);
         System.out.println("1. Open Account");
         System.out.println("2. View Accounts");
         System.out.println("3. Account Operations By Account Number");
-        System.out.println("4. Exit"+BGColors.ANSI_RESET);
+        System.out.println("4. View Closed Accounts");
+        System.out.println("5. Exit" + BGColors.ANSI_RESET);
     }
 
-    public static void processOptions(byte c){
-        System.out.println("Option "+c+" has been selected");
-        switch(c){
+    public static void processOptions(byte c) {
+        System.out.println("Option " + c + " has been selected");
+        switch (c) {
             case 1:
                 CreateAcMenu.promptInputs();
                 ScannerUtil.checkForHiddenInput();
@@ -59,24 +60,28 @@ public class MainMenu {
                 SearchAccountMenu.promptAcNumber();
                 break;
             case 4:
-                System.out.println("Exiting the Program. Good bye.");
-                ScannerUtil.close();
-                System.exit(0);
+                AccountSvc.displayClosedAccounts();
+                ScannerUtil.checkForHiddenInput();
                 break;
-            case 5:
+            case 6:
                 System.out.println("Hidden Option: Inserting Dummy Records");
                 AccountSvc.insertDummyRecords();
                 ScannerUtil.checkForHiddenInput();
+                break;
+            case 5:
+                System.out.println("Exiting the Program. Good bye.");
                 break;
             default:
                 System.out.println("Invalid Option. Please provide a valid option.");
                 break;
         }
-        if(c!=4){
-            ScannerUtil.pause();           
+        if (c != 5) {
+            ScannerUtil.pause();
             start();
+        } else {
+            ScannerUtil.close();
+            System.exit(0);
         }
     }
-
 
 }
