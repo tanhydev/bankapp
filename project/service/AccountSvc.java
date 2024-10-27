@@ -2,7 +2,9 @@ package project.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import project.model.Account;
 import project.model.TransHistory;
@@ -19,7 +21,8 @@ import project.util.BGColors;
 
 public class AccountSvc {
 
-    private static List<Account> accounts = new ArrayList<Account>();
+    // private static List<Account> accounts = new ArrayList<Account>();
+    private static Map<String, Account> accounts = new HashMap<>();
     private static List<Account> closedAccounts = new ArrayList<Account>();
     private static int noOfSavingAc = 0;
     private static int noOfCurrentAc = 0;
@@ -51,7 +54,7 @@ public class AccountSvc {
         account.addTxHistory(th);
 
         account.deposit(amount);
-        accounts.add(account);
+        accounts.put(account.getAcNumber(),account);
         return account;
     }
 
@@ -64,9 +67,9 @@ public class AccountSvc {
                 System.out.println(": ");
             }
             System.out.println("------------------");
-            for (Account account : accounts) {
+            for (Map.Entry<String,Account> account : accounts.entrySet()) {
                 System.out.println(BGColors.ANSI_YELLOW);
-                account.displayAccountDetails();
+                account.getValue().displayAccountDetails();
                 System.out.println(BGColors.ANSI_RESET);
                 System.out.println("------------------");
             }
@@ -101,21 +104,29 @@ public class AccountSvc {
     public static Account getAccount(String acNum){
         Account foundAc = null;
 
-        for(Account ac:accounts){
-            if(ac.getAcNumber().equals(acNum)){
-                foundAc = ac;
-                break;
-            };
+        // for(Account ac:accounts){
+        //     if(ac.getAcNumber().equals(acNum)){
+        //         foundAc = ac;
+        //         break;
+        //     };
+        // }
+        if(accounts.containsKey(acNum)){
+            foundAc = accounts.get(acNum);
         }
 
         return foundAc;
     }
 
     public static boolean removeAccount(Account ac){
-        ac.withdraw(ac.getBalance());
-        ac.closeAccount();
-        closedAccounts.add(ac);
-        return accounts.remove(ac);
+        boolean success = false;
+        if(accounts.containsKey(ac.getAcNumber())){
+            ac.withdraw(ac.getBalance());
+            ac.closeAccount();
+            closedAccounts.add(ac);
+            accounts.remove(ac.getAcNumber());
+            success = true;
+        }
+        return success;
     }
 
     public static void insertDummyRecords(){
