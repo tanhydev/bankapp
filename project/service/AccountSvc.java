@@ -1,9 +1,7 @@
 package project.service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import project.model.Account;
@@ -21,9 +19,9 @@ import project.util.BGColors;
 
 public class AccountSvc {
 
-    // private static List<Account> accounts = new ArrayList<Account>();
     private static Map<String, Account> accounts = new HashMap<>();
-    private static List<Account> closedAccounts = new ArrayList<Account>();
+    private static Map<String,Account> closedAccounts = new HashMap<>();
+
     private static int noOfSavingAc = 0;
     private static int noOfCurrentAc = 0;
 
@@ -87,8 +85,9 @@ public class AccountSvc {
                 System.out.println(": ");
             }
             System.out.println("------------------");
-            for (Account account : closedAccounts) {
+            for (Map.Entry<String,Account> entry : closedAccounts.entrySet()) {
                 System.out.println(BGColors.ANSI_YELLOW);
+                Account account = entry.getValue();
                 account.displayAccountDetails();
                 System.out.println("");
                 account.displayTxHistory();
@@ -122,7 +121,7 @@ public class AccountSvc {
         if(accounts.containsKey(ac.getAcNumber())){
             ac.withdraw(ac.getBalance());
             ac.closeAccount();
-            closedAccounts.add(ac);
+            closedAccounts.put(ac.getAcNumber(),ac);
             accounts.remove(ac.getAcNumber());
             success = true;
         }
